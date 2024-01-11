@@ -69,7 +69,7 @@ m = sn.SciModel([z,r,T], [L1,L2,L3,L4, C1,C1_2,C1_3,C3, C4])#, optimizer='ftrl')
 #     np.linspace(0, 10, 100),
 #     np.linspace(-1, 1, 100)
 # )
-h = m.train(input_data, target_data, learning_rate=0.001, epochs=30000, verbose=1,stop_loss_value=1e-9)
+h = m.train(input_data, target_data, learning_rate=0.001, epochs=300, verbose=1,stop_loss_value=1e-9)
 #,adaptive_weights = {"method": "NTK", "freq": 100},
 
 a = 200
@@ -88,9 +88,9 @@ Cc_pred = Cc.eval(m, input_data)
 
 import pandas as pd
 
-pd.DataFrame(Ca_pred).to_clipboard()
-pd.DataFrame(Cb_pred).to_clipboard()
-pd.DataFrame(Cc_pred).to_clipboard()
+pd.DataFrame(Ca_pred)#.to_clipboard()
+pd.DataFrame(Cb_pred)#.to_clipboard()
+pd.DataFrame(Cc_pred)#.to_clipboard()
 
 #SUBPLOTS
 
@@ -136,22 +136,21 @@ plt.xlabel('Z')
 plt.ylabel('C')
 plt.title('Concentration along length of reactor at T=350')
 plt.legend()
-
-pd.DataFrame(z_test[0,:]).to_clipboard()
-pd.DataFrame(Ca_pred[0,:]).to_clipboard()
-pd.DataFrame(Cb_pred[0,:]).to_clipboard()
-pd.DataFrame(Cc_pred[0,:]).to_clipboard()
+plt.show()
+pd.DataFrame(z_test[0,:])#.to_clipboard()
+pd.DataFrame(Ca_pred[0,:])#.to_clipboard()
+pd.DataFrame(Cb_pred[0,:])#.to_clipboard()
+pd.DataFrame(Cc_pred[0,:])#.to_clipboard()
 
 #pd.concat([pd.DataFrame(z_test[0,:]),pd.DataFrame(Ca_pred[0,:]), pd.DataFrame(Cb_pred[0,:]),pd.DataFrame(Cc_pred[0,:])], axis = 1).to_clipboard()
 
 
-# #
-# m.save_weights('ABC_200000epochs_300_400_Z_R_T.hdf5')
-# #
-# fig =  plt.figure()
-# loss_val = h.history['loss']#/h.history['loss'][0]
-# plt.semilogy(loss_val)
-# plt.xlabel('epochs')
-# plt.ylabel('$\\mathcal{L}/\\mathcal{L}_0$')
 #
-# plt.show()
+m.save_weights('ABC_200000epochs_300_400_Z_R_T.hdf5')
+
+fig =  plt.figure()
+loss_val = h.history['loss']#/h.history['loss'][0]
+plt.semilogy(loss_val)
+plt.xlabel('epochs')
+plt.ylabel('$\\mathcal{L}/\\mathcal{L}_0$')
+plt.show()
